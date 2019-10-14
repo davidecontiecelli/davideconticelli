@@ -1,0 +1,46 @@
+<html>
+<head>
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+</head>
+<body>
+	<!-- The permission button -->
+	<button   id="request"  style="position:absolute;top:10px;left:10px; height: 200px; width: 200px; margin: 50px auto; z-index: 2147483647;">Request Permission</button>
+
+	<script>
+	if (location.protocol != 'https:') {
+		location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+  	}
+  	
+	function requestT () {
+		if (typeof(DeviceMotionEvent) !== 'undefined' && typeof(DeviceMotionEvent.requestPermission) === 'function') {
+			alert('enter');
+			DeviceMotionEvent.requestPermission()
+			.then(response => {
+					alert('resp'+ response);
+					if (response == 'granted') {
+						window.addEventListener('devicemotion', (e) => {
+						// do something with e
+						})
+					}
+ 			})
+			.catch(console.error)
+		}
+		else {
+			alert('DeviceMotionEvent is not defined');
+		}
+	}
+	
+	document.getElementById('request').onclick = requestT;
+	</script>
+  
+	<!-- a simple scene -->
+	<a-scene>
+		<a-assets>
+			<img id="sky" src="media/low-res/1-vr-quasi-centro.jpg">
+		</a-assets>
+	
+		<a-sky src="#sky"></a-sky>
+	</a-scene>
+  
+  </body>
+</html>
